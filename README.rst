@@ -15,6 +15,7 @@ Quick start
 
     INSTALLED_APPS = [
         ...
+        'easyaudit',
         'easyaudit_utils',
         ...
     ]

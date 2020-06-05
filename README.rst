@@ -9,6 +9,7 @@ Detailed documentation is in the "docs" directory.
 Quick start
 -----------
 1. Install the package using::
+
     pip install django-easyaudit-utils
 
 2. Add "easyaudit_utils" to your INSTALLED_APPS setting like this::

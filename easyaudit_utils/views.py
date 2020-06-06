@@ -1,3 +1,7 @@
+from datetime import datetime
+
+from django.db.models import Q
+from django.views import View
 from django.views.generic import ListView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
@@ -7,7 +11,7 @@ from easyaudit.models import CRUDEvent, LoginEvent, RequestEvent
 from cbs.apps.core.views import PaginationMixin
 
 
-User = get_user_model
+User = get_user_model()
 
 
 class UserDateSearchMixin(View):
@@ -24,7 +28,7 @@ class UserDateSearchMixin(View):
 
             user_lookup = user_lookup | Q(**{User.USERNAME_FIELD: user_query})
 
-            for key in REQUIRED_FIELDS:
+            for key in User.REQUIRED_FIELDS:
                 user_lookup = user_lookup | Q(**{key: user_query})
 
             user = User.objects.filter(user_lookup)
@@ -42,14 +46,16 @@ class UserDateSearchMixin(View):
                 queryset = queryset.filter(date_lookup)
 
                 try:
-                    if date_query2:
+                    if date2_query:
                         date_lookup = date_lookup & Q(
-                            datetime__date__lte=datetime.strptime(date_query2, "%Y-%m-%d").date()
+                            datetime__date__lte=datetime.strptime(date2_query, "%Y-%m-%d").date()
                         )
                 except BaseException:
                     pass
             except BaseException:
                 pass
+
+            queryset = queryset.filter(date_lookup)
         return queryset
 
 

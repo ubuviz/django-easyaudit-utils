@@ -50,9 +50,9 @@ class UserDateSearchMixin(View):
                         date_lookup = date_lookup & Q(
                             datetime__date__lte=datetime.strptime(date2_query, "%Y-%m-%d").date()
                         )
-                except ImportError:
+                except BaseException:
                     pass
-            except ImportError:
+            except BaseException:
                 pass
 
             queryset = queryset.filter(date_lookup)
